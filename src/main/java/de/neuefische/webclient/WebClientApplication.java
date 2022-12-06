@@ -16,29 +16,31 @@ public class WebClientApplication {
 
         WebClient getWebClient = WebClient.create(url);
 
-        Animals animalAnswer = getWebClient.get()
-                .uri("/1")
+        Animals animal = getWebClient.get()
+                .uri("/2")
                 .retrieve()
                 .toEntity(Animals.class)
                 .block()
                 .getBody();
 
-        System.out.println(animalAnswer);
+        System.out.println(animal.toString());
 
 // ========================== POST ==========================================================
+
         String url2 = "https://eokz7vcsigzeiih.m.pipedream.net";
 
         WebClient postWebClient = WebClient.create(url2);
 
         Message message = postWebClient.post()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(new Message()) //+ Animals.getAnimal() "Ich mag diese Antwort "
+                .bodyValue(new Message("mein Tier ist ein "+ animal.getAnimal())) //+ Animals.getAnimal() "Ich mag diese Antwort "
                 .retrieve()
                 .toEntity(Message.class)
                 .block()
                 .getBody();
 
         System.out.println(message);
-    }
 
+    }
 }
+
